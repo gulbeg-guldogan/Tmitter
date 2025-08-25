@@ -1,14 +1,18 @@
 package org.example.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.example.dto.TweetPatchRequestDto;
 import org.example.dto.TweetRequestDto;
 import org.example.dto.TweetResponseDto;
+import org.example.dto.UserRequestDto;
 import org.example.entity.Tweet;
+import org.example.entity.User;
 import org.example.exceptions.TweetNotFoundException;
 import org.example.mapper.TweetMapper;
 import org.example.repository.TweetRepository;
+import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +24,13 @@ import java.util.Optional;
 public class TweetServiceImpl implements TweetService {
 
     @Autowired
-    @ToString.Exclude
     private final TweetRepository tweetRepository;
 
     @Autowired
     private final TweetMapper tweetMapper;
+
+    @Autowired
+    private final UserRepository userRepository;
 
     @Override
     public List<TweetResponseDto> getAll() {
@@ -41,9 +47,20 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
-    public TweetResponseDto create(TweetRequestDto tweetRequestDto) {
-        Tweet tweet = tweetRepository.save(tweetMapper.toEntity(tweetRequestDto));
-        return tweetMapper.toResponseDto(tweet);
+    @Transactional
+    public TweetResponseDto create(TweetRequestDto dto) {
+        // 1) User'ı bul
+        User user = userRepository.findById(dto.userId())
+                .orElseThrow(() -> new RuntimeException("User not found with id " + dto.userId()));
+
+        // 2) Tweet'i oluştur ve ilişkiyi set et
+        Tweet tweet = new Tweet();
+        tweet.setContent(dto.content());
+        tweet.setUser(user); // <- Burası kritik!
+
+        // 3) Kaydet ve DTO dön
+        Tweet saved = tweetRepository.save(tweet);
+        return tweetMapper.toResponseDto(saved);
     }
 
     @Override

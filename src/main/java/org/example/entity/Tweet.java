@@ -14,7 +14,7 @@ import java.util.Objects;
 @ToString
 //@Data
 @Entity
-@Table(name = "tTweet", schema = "public")
+@Table(name = "ttweet", schema = "tmitter")
 public class Tweet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,19 +29,27 @@ public class Tweet {
     private LocalDateTime createTime;
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
+
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
+
+    public Long getTweet_id() { return tweet_id; }
+    public void setTweet_id(Long tweet_id) { this.tweet_id = tweet_id; }
+
+
+
     @Override
-    public boolean equals(Object obj){
-        if(obj == this)
-            return true;
-
-        if(obj == null || obj.getClass() != getClass())
-            return false;
-
-        User user = (User) obj;
-        return user.getTweets().equals(tweet_id);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tweet other = (Tweet) o;
+        return Objects.equals(tweet_id, other.tweet_id);
     }
 
     @Override

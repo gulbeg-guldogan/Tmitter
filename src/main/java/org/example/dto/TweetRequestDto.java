@@ -10,6 +10,8 @@ public record TweetRequestDto(
         @NotBlank
         @NotNull
         @Size(max=400)
-        String content
+        String content,
+        @NotNull
+        Long userId
 ) {
 }
