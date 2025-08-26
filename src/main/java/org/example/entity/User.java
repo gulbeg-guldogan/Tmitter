@@ -23,7 +23,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long user_id;
+    private Long id;
 
     @Column(unique = true, nullable = false, length = 70)
     private String username;
@@ -55,8 +55,8 @@ public class User {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
-    public Long getUser_id() { return user_id; }
-    public void setUser_id(Long user_id) { this.user_id = user_id; }
+    public Long getUserId() { return id; }
+    public void setUserId(Long userId) { this.id = id; }
 
     public void addTweet(Tweet tweet){
         if (tweet == null) {
@@ -86,11 +86,11 @@ public class User {
             return false;
 
         User user = (User) obj;
-        return user.getUser_id().equals(user_id);
+        return user.getUserId().equals(id);
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(user_id);
+        return Objects.hash(id);
     }
 }

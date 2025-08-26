@@ -19,7 +19,7 @@ public class Tweet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long tweet_id;
+    private Long id;
 
     @Column(nullable = false, length = 400)
     private String content;
@@ -39,8 +39,8 @@ public class Tweet {
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
 
-    public Long getTweet_id() { return tweet_id; }
-    public void setTweet_id(Long tweet_id) { this.tweet_id = tweet_id; }
+    public Long getTweetId() { return id; }
+    public void setTweet_id(Long tweetId) { this.id = id; }
 
 
 
@@ -49,11 +49,11 @@ public class Tweet {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tweet other = (Tweet) o;
-        return Objects.equals(tweet_id, other.tweet_id);
+        return Objects.equals(id, other.id);
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(tweet_id);
+        return Objects.hash(id);
     }
 }

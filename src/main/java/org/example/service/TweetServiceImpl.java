@@ -2,11 +2,9 @@ package org.example.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 import org.example.dto.TweetPatchRequestDto;
 import org.example.dto.TweetRequestDto;
 import org.example.dto.TweetResponseDto;
-import org.example.dto.UserRequestDto;
 import org.example.entity.Tweet;
 import org.example.entity.User;
 import org.example.exceptions.TweetNotFoundException;

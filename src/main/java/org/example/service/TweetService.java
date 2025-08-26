@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.dto.TweetPatchRequestDto;
 import org.example.dto.TweetRequestDto;
 import org.example.dto.TweetResponseDto;
+import org.example.entity.Tweet;
 
 import java.util.List;
 
